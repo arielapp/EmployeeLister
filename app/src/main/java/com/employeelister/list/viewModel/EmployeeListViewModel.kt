@@ -4,10 +4,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.employeelister.list.useCase.EmployeeListUseCase
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class EmployeeListViewModel(
+class EmployeeListViewModel @Inject constructor(
     private val employeeListUseCase: EmployeeListUseCase
 ) : ViewModel() {
 
