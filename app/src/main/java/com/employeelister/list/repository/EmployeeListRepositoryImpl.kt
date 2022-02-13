@@ -3,9 +3,10 @@ package com.employeelister.list.repository
 import com.employeelister.api.Employee
 import com.employeelister.api.EmployeeApi
 import com.employeelister.util.Result
+import javax.inject.Inject
 
 
-class EmployeeListRepositoryImpl(
+class EmployeeListRepositoryImpl @Inject constructor(
     private val api: EmployeeApi
 ): EmployeeListRepository {
 

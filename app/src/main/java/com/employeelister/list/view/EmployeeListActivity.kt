@@ -2,6 +2,7 @@ package com.employeelister.list.view
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -33,9 +34,10 @@ class EmployeeListActivity : AppCompatActivity() {
 
         viewModel = ViewModelProvider(this, viewModelFactory).get(EmployeeListViewModel::class.java)
 
-        lifecycleScope.launchWhenCreated {
             with(viewModel) {
+
                 viewState.observe(this@EmployeeListActivity, {
+                    Log.i("Activity", "observed viewState: ${it.employees}")
                     employeesAdapter = EmployeeListAdapter(viewModel)
                     with(binding.employeeListRecyclerview) {
                         layoutManager = LinearLayoutManager(this@EmployeeListActivity)
@@ -58,7 +60,6 @@ class EmployeeListActivity : AppCompatActivity() {
                     }
                 })
             }
-        }
     }
 
     private val coreComponent: CoreComponent by lazy {

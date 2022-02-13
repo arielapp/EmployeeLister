@@ -1,10 +1,14 @@
 package com.employeelister.list.viewModel
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.employeelister.api.Employee
 import com.employeelister.list.useCase.EmployeeListUseCase
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class EmployeeListViewModel @Inject constructor(
@@ -22,10 +26,19 @@ class EmployeeListViewModel @Inject constructor(
     }
 
     private fun listEmployees() {
+        var employees = emptyList<Employee>()
+        Log.i("EMPLOYEE VIEW MODEL", "outside scope: $employees")
         viewModelScope.launch {
-            mutableViewStates.value = EmployeeListViewState(
-            employeeListUseCase.listEmployees()
-            )
+            withContext(Dispatchers.IO) {
+                employees = employeeListUseCase.listEmployees()
+                Log.i("EMPLOYEE VIEW MODEL", "viewModelScope: $employees")
+
+            }
+            withContext(Dispatchers.Main) {
+                mutableViewStates.value = EmployeeListViewState(
+                    employees
+                )
+            }
         }
     }
 

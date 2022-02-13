@@ -26,7 +26,6 @@ class EmployeeListAdapter(private val viewModel: EmployeeListViewModel) :
 
     override fun onBindViewHolder(holder: EmployeeViewHolder, position: Int) {
         holder.binding.apply {
-            viewModel.viewState.value
             val employee = viewModel.viewState.value?.employees?.get(position)
             this.nameTextview.text = employee?.employeeName
             this.ageTextview.text = employee?.employeeAge

@@ -2,6 +2,11 @@ package com.employeelister.di
 
 import androidx.lifecycle.ViewModel
 import com.employeelister.api.EmployeeApi
+import com.employeelister.details.repository.EmployeeDetailRepository
+import com.employeelister.details.repository.EmployeeDetailRepositoryImpl
+import com.employeelister.details.useCase.EmployeeDetailUseCase
+import com.employeelister.details.useCase.EmployeeDetailUseCaseImpl
+import com.employeelister.details.viewModel.EmployeeDetailViewModel
 import com.employeelister.list.repository.EmployeeListRepository
 import com.employeelister.list.repository.EmployeeListRepositoryImpl
 import com.employeelister.list.useCase.EmployeeListUseCase
@@ -48,4 +53,20 @@ class EmployeeModule {
         return EmployeeListRepositoryImpl(api)
     }
 
+    @Provides
+    @IntoMap
+    @ViewModelKey(EmployeeDetailViewModel::class)
+    fun provideEmployeeDetailViewModel(useCase: EmployeeDetailUseCase): ViewModel {
+        return EmployeeDetailViewModel(useCase)
+    }
+
+    @Provides
+    fun provideEmployeeDetailUseCase(repo: EmployeeDetailRepository): EmployeeDetailUseCase {
+        return EmployeeDetailUseCaseImpl(repo)
+    }
+
+    @Provides
+    fun provideEmployeeDetailRepository(api: EmployeeApi): EmployeeDetailRepository {
+        return EmployeeDetailRepositoryImpl(api)
+    }
 }
